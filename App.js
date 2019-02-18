@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Button
-} from "react-native";
+import { Platform, StyleSheet, TextInput, View, Button } from "react-native";
+
+import ListItem from "./src/components/ListItem/ListItem";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -36,7 +31,8 @@ export default class App extends Component<Props> {
     if (this.state.placeName.trim() !== "") {
       this.setState(prevState => {
         return {
-          places: prevState.places.concat(prevState.placeName)
+          places: prevState.places.concat(prevState.placeName),
+          placeName: ""
         };
         /* 
         Debug to find why this is not working
@@ -48,7 +44,7 @@ export default class App extends Component<Props> {
   };
   render() {
     const placesOutput = this.state.places.map((place, index) => (
-      <Text key={index}>{place}</Text>
+      <ListItem key={index} placeName={place} />
     ));
     return (
       // Container view / page view
@@ -67,7 +63,7 @@ export default class App extends Component<Props> {
             onPress={this.placeSubmitHandler}
           />
         </View>
-        <View>{placesOutput}</View>
+        <View style={styles.listContainer}>{placesOutput}</View>
       </View>
     );
   }
@@ -92,5 +88,8 @@ const styles = StyleSheet.create({
   },
   placeButton: {
     width: "30%"
+  },
+  listContainer: {
+    width: "100%"
   }
 });
