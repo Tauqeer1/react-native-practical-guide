@@ -4,12 +4,13 @@ import { View, StyleSheet } from "react-native";
 import ListItem from "../ListItem/ListItem";
 
 export default class PlaceList extends Component {
-  itemPressed() {
-    alert(`item pressed`);
-  }
   render() {
     const placesOutput = this.props.places.map((place, i) => (
-      <ListItem key={i} placeName={place} onItemPressed={this.itemPressed} />
+      <ListItem
+        key={i}
+        placeName={place}
+        onItemPressed={() => this.props.onItemDeleted(i)}
+      />
     ));
     return <View style={styles.listContainer}>{placesOutput}</View>;
   }
