@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 
 import ListItem from "../ListItem/ListItem";
 
@@ -12,7 +12,7 @@ export default class PlaceList extends Component {
         onItemPressed={() => this.props.onItemDeleted(i)}
       />
     ));
-    return <View style={styles.listContainer}>{placesOutput}</View>;
+    return <ScrollView style={styles.listContainer}>{placesOutput}</ScrollView>;
   }
 }
 
