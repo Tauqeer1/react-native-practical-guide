@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, TextInput, View, Button } from "react-native";
 
-import ListItem from "./src/components/ListItem/ListItem";
+import PlaceInput from "./src/components/PlaceInput/PlaceInput";
+import PlaceList from "./src/components/PlaceList/PlaceList";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -10,10 +11,8 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   state = {
-    placeName: "",
     places: []
   };
 
@@ -21,49 +20,20 @@ export default class App extends Component<Props> {
     super(props);
   }
 
-  placeNameChangedHandler = val => {
-    this.setState({
-      placeName: val
+  placeAddedHandler = placeName => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(placeName)
+      };
     });
   };
 
-  placeSubmitHandler = () => {
-    if (this.state.placeName.trim() !== "") {
-      this.setState(prevState => {
-        return {
-          places: prevState.places.concat(prevState.placeName),
-          placeName: ""
-        };
-        /* 
-        Debug to find why this is not working
-        return {
-          places: prevState.places.push(prevState.placeName)
-        }; */
-      });
-    }
-  };
   render() {
-    const placesOutput = this.state.places.map((place, index) => (
-      <ListItem key={index} placeName={place} />
-    ));
     return (
       // Container view / page view
       <View style={styles.container}>
-        {/* nested view container for input and button */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.placeInput}
-            placeholder="An awesome place"
-            value={this.state.placeName}
-            onChangeText={this.placeNameChangedHandler}
-          />
-          <Button
-            title="Add"
-            style={styles.placeButton}
-            onPress={this.placeSubmitHandler}
-          />
-        </View>
-        <View style={styles.listContainer}>{placesOutput}</View>
+        <PlaceInput onPlaceAdded={this.placeAddedHandler} />
+        <PlaceList places={this.state.places} />
       </View>
     );
   }
@@ -73,23 +43,9 @@ const styles = StyleSheet.create({
   container: {
     // flexDirection: 'column' (by default)
     flex: 1,
-    padding: 20,
+    padding: 26,
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "flex-start"
-  },
-  inputContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  placeInput: {
-    width: "70%"
-  },
-  placeButton: {
-    width: "30%"
-  },
-  listContainer: {
-    width: "100%"
   }
 });
