@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, FlatList } from "react-native";
 
 import ListItem from "../ListItem/ListItem";
 
@@ -12,7 +12,18 @@ export default class PlaceList extends Component {
         onItemPressed={() => this.props.onItemDeleted(i)}
       />
     ));
-    return <ScrollView style={styles.listContainer}>{placesOutput}</ScrollView>;
+    return (
+      <FlatList
+        data={this.props.places}
+        renderItem={info => (
+          <ListItem
+            placeName={info.item.value}
+            onItemPressed={() => this.props.onItemDeleted(info.item.key)}
+          />
+        )}
+        style={styles.listContainer}
+      />
+    );
   }
 }
 
