@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Image
+} from "react-native";
 
 export default class ListItem extends Component {
   constructor(props) {
@@ -10,6 +16,7 @@ export default class ListItem extends Component {
       // Touchable is used for making item clickable(touchable)
       <TouchableWithoutFeedback onPress={this.props.onItemPressed}>
         <View style={styles.listItem}>
+          <Image source={this.props.placeImage} style={styles.placeImage} />
           <Text>{this.props.placeName}</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -22,6 +29,13 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     marginBottom: 5,
-    backgroundColor: "#eee"
+    backgroundColor: "#eee",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  placeImage: {
+    marginRight: 8,
+    height: 30,
+    width: 30
   }
 });

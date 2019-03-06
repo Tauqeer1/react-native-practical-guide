@@ -5,19 +5,20 @@ import ListItem from "../ListItem/ListItem";
 
 export default class PlaceList extends Component {
   render() {
-    const placesOutput = this.props.places.map((place, i) => (
+    /* const placesOutput = this.props.places.map((place, i) => (
       <ListItem
         key={i}
         placeName={place}
         onItemPressed={() => this.props.onItemDeleted(i)}
       />
-    ));
+    )); */
     return (
       <FlatList
         data={this.props.places}
         renderItem={info => (
           <ListItem
-            placeName={info.item.value}
+            placeName={info.item.name}
+            placeImage={info.item.image}
             onItemPressed={() => this.props.onItemDeleted(info.item.key)}
           />
         )}
